@@ -5,24 +5,24 @@ stages:
   displayName: 'Build the web application'
   jobs:
   - job: 'Build'
-  displayName: 'Build Job'
-  pool:
-    vmImage: 'ubuntu-16.04'
-    demands:
-    - npm
+    displayName: 'Build Job'
+    pool:
+      vmImage: 'ubuntu-16.04'
+      demands:
+      - npm
 
-  variables:
-    buildConfiguration: 'Release'
-    wwwrootDir: 'Tailspin.SpaceGame.Web/wwwroot'
-    dotnetSdkVersion: '3.1.200'
+    variables:
+      buildConfiguration: 'Release'
+      wwwrootDir: 'Tailspin.SpaceGame.Web/wwwroot'
+      dotnetSdkVersion: '3.1.200'
 
-  steps:
-  - task: DotNetCoreInstaller@0
-    displayName: 'Use .NET Core SDK $(dotnetSdkVersion)'
-    inputs:
-      version: '$(dotnetSdkVersion)'
+    steps:
+    - task: DotNetCoreInstaller@0
+      displayName: 'Use .NET Core SDK $(dotnetSdkVersion)'
+      inputs:
+        version: '$(dotnetSdkVersion)'
 
-  - task: Npm@1
-    displayName: 'Run npm install'
-    inputs:
-      verbose: false
+    - task: Npm@1
+      displayName: 'Run npm install'
+      inputs:
+        verbose: false
