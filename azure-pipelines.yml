@@ -32,5 +32,4 @@ stages:
 
     - task: BatchScript@1
       inputs:
-        filename: 
-          path: 'test.bat'
+        filename: 'test.bat'
