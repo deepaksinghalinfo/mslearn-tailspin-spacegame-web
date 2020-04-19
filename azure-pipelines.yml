@@ -59,7 +59,7 @@ stages:
         command: custom
         custom: tool
         arguments: 'install --global dotnet-reportgenerator-globaltool'
-        continueOnError:true
+        continueOnError: true
 
     - task: DotNetCoreCLI@2
       displayName: 'Run unit tests - $(buildConfiguration)'
