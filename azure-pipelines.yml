@@ -55,11 +55,12 @@ stages:
 
     - task: DotNetCoreCLI@2
       displayName: 'Install ReportGenerator'
+      continueOnError: true
       inputs:
         command: custom
         custom: tool
         arguments: 'install --global dotnet-reportgenerator-globaltool'
-        continueOnError: true
+        
 
     - task: DotNetCoreCLI@2
       displayName: 'Run unit tests - $(buildConfiguration)'
