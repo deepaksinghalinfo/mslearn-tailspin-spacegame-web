@@ -5,7 +5,7 @@ variables:
   buildConfiguration: 'Release'
   wwwrootDir: 'Tailspin.SpaceGame.Web/wwwroot'
   dotnetSdkVersion: '3.1.200'
-
+  releaseBranchName: 'code-coverage'
 stages:
 - stage: 'Build'
   displayName: 'Build the web application'
@@ -13,8 +13,7 @@ stages:
   - job: 'Build'
     displayName: 'Build Job'
     pool:
-      name: 'Test Pool'
-      vmImage: 'ubuntu-18.04'
+      vmImage: 'ubuntu-16.04'
       demands:
       - npm
        
@@ -107,9 +106,15 @@ stages:
       inputs:
         scriptPath: 'test.sh'
 
-- stage: 'Deploy'
-  displayName: 'Deploy the web application'
+- stage: 'Dev'
+  displayName: 'Deploy to Dev environment'
   dependsOn: Build
+  condition: |
+    and
+    (
+      succeeded(),
+      eq(variables['Build.SourceBranchName'], variables['releaseBranchName'])
+    )
   jobs:
   - deployment: Deploy
     pool:
@@ -127,6 +132,6 @@ stages:
           - task: AzureWebApp@1
             displayName: 'Azure App Service Deploy: website'
             inputs:
-              azureSubscription: 'test-azure-self-hosted-ubuntu-sc'
-              appName: '$(WebAppName)'
+              azureSubscription: 'test-classic-dev-ops-pipeline-sc'
+              appName: '$(WebAppNameDev)'
               package: '$(Pipeline.Workspace)/drop/$(buildConfiguration)/Tailspin.SpaceGame.Web.zip'
