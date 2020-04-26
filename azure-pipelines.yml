@@ -148,7 +148,8 @@ stages:
 - stage: 'Test'
   displayName: 'Deploy to the test environment'
   dependsOn: Build
-  condition: eq(variables['Build.Reason'], 'Schedule')
+  #condition: eq(variables['Build.Reason'], 'Schedule')
+  condition: eq(1,2)
   jobs:
   - deployment: Deploy
     pool:
@@ -172,6 +173,7 @@ stages:
 - stage: 'Stage'
   displayName: 'Deploy to the stage environment'
   dependsOn: Test
+  condition: eq(1,2)
   jobs:
   - deployment: Deploy
     pool:
