@@ -8,7 +8,7 @@ variables:
   releaseBranchName: 'code-coverage'
 
 schedules:
-- cron: '0 3 * * *'
+- cron: '47 14 * * *'
   displayName: Deploy every day at 3 A.M.
   branches:
     include:
@@ -127,8 +127,7 @@ stages:
   jobs:
   - deployment: Deploy
     pool:
-      name: 'Test Pool'
-      vmImage: 'ubuntu-18.04'
+      vmImage: 'ubuntu-16.04'
     environment: dev
     variables:
     - group: Release
@@ -148,7 +147,7 @@ stages:
 - stage: 'Test'
   displayName: 'Deploy to the test environment'
   dependsOn: Dev
-  #condition: eq(variables['Build.Reason'], 'Schedule')
+  condition: eq(variables['Build.Reason'], 'Schedule')
   jobs:
   - deployment: Deploy
     pool:
