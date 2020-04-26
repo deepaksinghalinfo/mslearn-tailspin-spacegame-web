@@ -8,11 +8,11 @@ variables:
   releaseBranchName: 'code-coverage'
 
 schedules:
-- cron: '47 14 * * *'
+- cron: '55 14 * * *'
   displayName: Deploy every day at 3 A.M.
   branches:
     include:
-    - release
+    - code-coverage
   always: false 
 
 stages:
@@ -122,7 +122,8 @@ stages:
     and
     (
       succeeded(),
-      eq(variables['Build.SourceBranchName'], variables['releaseBranchName'])
+      eq(variables['Build.SourceBranchName'], variables['releaseBranchName']),
+      ne(variables['Build.Reason'], 'Schedule')
     )
   jobs:
   - deployment: Deploy
